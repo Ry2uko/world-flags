@@ -1,3 +1,10 @@
+:root {
+  --main-bg-color: #0F141D;
+  --foreground-bg-color: #2f61a60c;
+  --ff-Ubuntu: 'Ubuntu', sans-serif;
+  --ff-Fira-Sans: 'Fira Sans', sans-serif;
+}
+
 *, ::before, ::after {
   margin: 0;
   padding: 0;
@@ -8,18 +15,184 @@ body, html {
   width: 100%;
   height: 100vh;
   overflow-x: hidden;
-  background-color: #0F141D;
+  background-color: var(--main-bg-color);
+}
+
+div.parent-container {
+  position: relative;
+}
+
+div.continent-modal-container {
+  z-index: 9999;
+  background: #111620;
+  position: absolute;
+  width: 1200px;
+  height: 800px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #ffffff10;
+  border-radius: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  opacity: 0;
+  display: none;
+}
+
+div.continent-modal-container button#closeContinentModal {
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  color: #ffffffe9;
+  font-size: 2.2rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 0.8rem 1.3rem;
+  cursor: pointer;
+}
+
+div.continent-modal-container h4.modal-title {
+  text-align: center;
+  color: #fff;
+  font-family: var(--ff-Fira-Sans);
+  font-size: 2.4rem;
+  margin: 2.5rem 1.5rem 1.5rem 1.5rem;
+}
+
+div.continent-modal-container div.continents-container {
+  padding: 1rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 15px;
+}
+
+div.continent-filter {
+  height: 280px;
+  position: relative;
+  cursor: pointer;
+  transition: ease-out 0.2s;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 0.35rem;
+  user-select: none;
+}
+
+div.continent-filter.active {
+  border: 1px solid #66bfdb71;
+}
+
+div.continent-filter.active div.continent-bg-image {
+  opacity: 1;
+}
+
+div.continent-filter.active div.continent-text {
+  color: #fff;
+}
+
+div.continent-filter div.continent-bg-image {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  opacity: 0.4;
+  border-radius: 0.35rem;
+  transition: ease-out 0.4s;
+}
+
+div.continent-filter div.continent-text {
+  background-color:rgba(0, 0, 0, 0);
+  color: rgba(255, 255, 255, 0.4);
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-family: var(--ff-Ubuntu);
+  font-size: 2.8rem;
+  transition: ease-out 0.4s;
+}
+
+div.continent-filter#Asia div.continent-bg-image {
+  background-image: url("../assets/img/asia_satellite.jpg");
+}
+
+div.continent-filter#Europe div.continent-bg-image {
+  background-image: url("../assets/img/europe_satellite.jpg");
+}
+
+div.continent-filter#NorthAmerica div.continent-bg-image {
+  background-image: url("../assets/img/north_america_satellite.jpg");
+}
+
+div.continent-filter#SouthAmerica div.continent-bg-image {
+  background-image: url("../assets/img/south_america_satellite.jpg");
+}
+
+div.continent-filter#Africa div.continent-bg-image {
+  background-image: url("../assets/img/africa_satellite.jpg");
+}
+
+div.continent-filter#Oceania div.continent-bg-image {
+  background-image: url("../assets/img/oceania_satellite.jpg");
 }
 
 div.header-container {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.7rem;
+  padding: 2.2rem 0 0.5rem 0;
+}
+
+div.data-tags-container {
+  margin-bottom: 1.8rem;
+}
+
+div.data-tags-container span.flags-count {
+  position: absolute;
+  left: 0;
+  margin-top: 1rem;
+  margin-left: 5rem;
+  color: #fff;
+  font-family: var(--ff-Fira-Sans);
+  font-size: 1.3rem;
+}
+
+span.flags-count span.colored {
+  color: #0de454;
+}
+
+div.header-container button#quizBtn {
+  position: absolute;
+  right: 0;
+  margin-right: 5rem;
+  background-color: #fff;
+  color: var(--main-bg-color);
+  font-family: var(--ff-Fira-Sans);
+  font-size: 1.6rem;
+  border: 2px solid #fff;
+  border-radius: 1.3rem;
+  padding: 6px 35px;
+  cursor: pointer;
+  transition: background-color ease-out 0.3s, color ease-out 0.3s;
+}
+
+div.header-container button#quizBtn:hover {
+  background-color: var(--main-bg-color);
+  color: #fff;
+}
+
+div.header-container button#continentFilterBtn {
+  margin-left: 1.8rem;
+  border: none;
+  background-color: var(--main-bg-color);
+  color: #fffffff5;
+  font-size: 1.85rem;
+  cursor: pointer;
+  opacity: 0.92;
 }
 
 div.search-input-container {
-  position: relative
+  position: relative;
 }
 
 div.search-input-container i.search-icon {
@@ -29,18 +202,19 @@ div.search-input-container i.search-icon {
   transform: translate(0, -50%);
   position: absolute;
   color: #fff;
+  cursor: pointer;
 }
 
 div.search-input-container input#searchCountry {
   width: 700px;
   height: 50px;
-  background-color: #0F141D;
+  background-color: var(--main-bg-color);
   border: 1px solid #ffffffac;
   border-radius: 0.3rem;
   color: #fff;
   padding: 5px 50px;
   font-size: 1.4rem;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: var(--ff-Ubuntu);
 }
 
 input:focus {
@@ -62,7 +236,7 @@ div.flag-container {
   cursor: pointer;
   height: 260px;
   border-radius: 0.3rem;
-  background-color: #2f61a60c;
+  background-color: var(--foreground-bg-color);
   display: flex;
   flex-direction: column;
 }
@@ -116,3 +290,18 @@ div.flag-container span.flag-country {
   text-align: center;
 }
 
+/* Responsive Design */
+
+@media only screen and (max-width: 1300px) {
+  div.search-input-container input#searchCountry {
+    width: 480px;
+  }
+
+  div.header-container button#continentFilterBtn {
+    margin-left: 1.4rem;
+  }
+
+  div.header-container button#quizBtn {
+    font-size: 1.5rem;
+  }
+}

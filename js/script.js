@@ -14,6 +14,9 @@ $(document).ready(function(){
   // load country data
   $.get("https://flagcdn.com/en/codes.json", countriesData => {
     let countryCodesShuffled = shuffle(Object.keys(countriesData));
+    let flagsCount = countryCodesShuffled.length, currFlagsCount = 0;
+
+    // Load flags
     countryCodesShuffled.forEach(countryCode => {
       flagsContainer.append(`
       <div class="flag-container" data-country="${countriesData[countryCode]}">
@@ -26,17 +29,68 @@ $(document).ready(function(){
           <span class="flag-country">${countriesData[countryCode]}</span>
         </div>
       </div>
-      `)
+      `);
+    });
+
+    $('.flags-count').html(`<span class="colored"><span id="flagsCount">${flagsCount}</span> / ${flagsCount}</span> Flags Shown`);
+
+    // Search input
+    $('#searchCountry').on('keyup', debounce(function() {
+      let searchVal = $(this).val().toLowerCase();
+      $('.flag-container').attr('class', 'flag-container hidden');
+      $('.flag-container').filter(function(){
+        return $(this).attr('data-country').match(new RegExp(`${searchVal}.*`, 'i'));
+      }).removeClass('hidden');
+
+      currFlagsCount = $('.flag-container:not(.hidden)').length;
+      $('#flagsCount').text(currFlagsCount);
+
+      currFlagsCount === 0 ? $('#flagsCount').css('color', '#e61e10')
+      : currFlagsCount < flagsCount ? $('#flagsCount').css('color', '#cee40d')
+      : $('#flagsCount').css('color', '#0de454');
+
+    }, 50));
+
+    // Continent filter modal
+    $('#continentFilterBtn').on('click', () => {
+      const ANIM_MS = 280;
+
+      $('.parent-container').css({
+        'pointerEvents': 'none',
+        'userSelect': 'none'
+      }).animate({
+        'opacity': 0.4
+      }, ANIM_MS);
+
+      $('.continent-modal-container').css('display', 'block').animate({
+        'opacity': 1
+      }, ANIM_MS);
+    });
+
+    $('#closeContinentModal').on('click', () => {
+      const ANIM_MS = 280;
+
+      $('.parent-container').animate({
+        'opacity': 1
+      }, ANIM_MS, function(){
+        $(this).css({
+          'pointerEvents': 'auto',
+          'userSelect': 'auto'
+        });
+      });
+      
+
+      $('.continent-modal-container').animate({
+        'opacity': 0
+      }, ANIM_MS, function(){
+        $(this).css('display', 'none');
+      });
+    });
+
+    $('.continent-filter').on('click', function(){
+      $(this).toggleClass('active');
     });
   }); 
-
-  $('#searchCountry').on('keyup', debounce(function() {
-    let searchVal = $(this).val().toLowerCase();
-    $('.flag-container').attr('class', 'flag-container hidden');
-    $('.flag-container').filter(function(){
-      return $(this).attr('data-country').match(new RegExp(`^${searchVal}.*$`, 'i'));
-    }).removeClass('hidden');
-  }, 50));
 
   // delay execution of the filtering function until the user has finished typing
   function debounce(fn, wait) {

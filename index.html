@@ -7,19 +7,56 @@
     <title>World Flags</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&family=Ubuntu&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css" type="text/css" /> 
     <script src="https://kit.fontawesome.com/b40850cb13.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   </head>
   <body>
+    <div class="continent-modal-container">
+      <button type="button" id="closeContinentModal"><i class="fa-solid fa-xmark"></i></button>
+      <h4 class="modal-title">Filter by Continent</h4>
+      <div class="continents-container">
+        <div class="continent-filter" id="Africa">
+          <div class="continent-bg-image"></div>
+          <div class="continent-text">Africa</div>
+        </div>
+        <div class="continent-filter" id="Asia">
+          <div class="continent-bg-image"></div>
+          <div class="continent-text">Asia</div>
+        </div>
+        <div class="continent-filter" id="Europe">
+          <div class="continent-bg-image"></div>
+          <div class="continent-text">Europe</div>
+        </div>
+        <div class="continent-filter" id="NorthAmerica">
+          <div class="continent-bg-image"></div>
+          <div class="continent-text">North America</div>
+        </div>
+        <div class="continent-filter" id="Oceania">
+          <div class="continent-bg-image"></div>
+          <div class="continent-text">Oceania</div>
+        </div>
+        <div class="continent-filter" id="SouthAmerica">
+          <div class="continent-bg-image"></div>
+          <div class="continent-text">South America</div>
+        </div>
+      </div>
+    </div>
     <div class="parent-container">
       <div class="header-container">
         <div class="search-input-container">
           <i class="fa-solid fa-magnifying-glass search-icon"></i>
           <input type="text" id="searchCountry" autocomplete="off" />
         </div>
+        <button type="button" id="continentFilterBtn" title="Filter by Continent">
+          <i class="fa-solid fa-earth-americas"></i>
+        </button>
+        <button type="button" id="quizBtn">Quiz</button>
       </div> 
+      <div class="data-tags-container">
+        <span class="flags-count"></span>
+      </div>
       <div class="body-container">
         <div class="flags-container"></div>
       </div>
