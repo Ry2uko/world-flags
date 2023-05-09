@@ -15,7 +15,7 @@ div.header-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.5rem;
+  padding: 1.7rem;
 }
 
 div.search-input-container {
@@ -53,17 +53,22 @@ div.body-container {
 
 div.flags-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
 }
 
 div.flag-container {
+  overflow: auto;
   cursor: pointer;
-  height: 240px;
+  height: 260px;
   border-radius: 0.3rem;
   background-color: #2f61a60c;
   display: flex;
   flex-direction: column;
+}
+
+div.flag-container:hover div.flag-image-container {
+  transform: scale(1.05);
 }
 
 div.flag-container.hidden {
@@ -73,7 +78,7 @@ div.flag-container.hidden {
 
 div.flag-container div.flag-image-container-upper {
   width: 100%;
-  height: 145px;
+  height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,7 +86,12 @@ div.flag-container div.flag-image-container-upper {
 }
 
 div.flag-container div.flag-image-container {
-  width: 180px;
+  width: 160px;
+  transition: ease-out 0.2s;
+}
+
+div.flag-container[data-country="Nepal"] div.flag-image-container {
+  width: 120px;
 }
 
 div.flag-container img.flag {
@@ -90,8 +100,16 @@ div.flag-container img.flag {
   border-radius: 0.25rem;
 }
 
+div.flag-container div.flag-country-container {
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+}
+
 div.flag-container span.flag-country {
-  margin-top: 10px;
   color: #fff;
   font-size: 1.4rem;
   font-family: 'Ubuntu', sans-serif;

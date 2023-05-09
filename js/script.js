@@ -11,18 +11,24 @@
 $(document).ready(function(){
   const flagsContainer = $('.flags-container');
 
-  countriesData.forEach(countryData => {
-    flagsContainer.append(`
-    <div class="flag-container" data-country="${countryData.country}">
-      <div class="flag-image-container-upper">
-        <div class="flag-image-container">
-          <img src="./assets/flags/${countryData.code}.png" class="flag" data-code="${countryData.code}">
+  // load country data
+  $.get("https://flagcdn.com/en/codes.json", countriesData => {
+    let countryCodesShuffled = shuffle(Object.keys(countriesData));
+    countryCodesShuffled.forEach(countryCode => {
+      flagsContainer.append(`
+      <div class="flag-container" data-country="${countriesData[countryCode]}">
+        <div class="flag-image-container-upper">
+          <div class="flag-image-container">
+            <img src="https://flagcdn.com/w160/${countryCode}.png" class="flag" data-code="${countryCode}">
+          </div>
+        </div>
+        <div class="flag-country-container">
+          <span class="flag-country">${countriesData[countryCode]}</span>
         </div>
       </div>
-      <span class="flag-country">${countryData.country}</span>
-    </div>
-    `)
-  });
+      `)
+    });
+  }); 
 
   $('#searchCountry').on('keyup', debounce(function() {
     let searchVal = $(this).val().toLowerCase();
@@ -43,5 +49,17 @@ $(document).ready(function(){
         fn.apply(context, args);
       }, wait);
     }
+  }
+
+  // shuffle data using Fisher-Yates-Durstendfeld shuffle
+  function shuffle(sourceArr) {
+    for (let i = 0; i < sourceArr.length - 1; i++) {
+      let j = i + Math.floor(Math.random() * (sourceArr.length - i)); // random index
+      let temp = sourceArr[j];
+      sourceArr[j] = sourceArr[i];
+      sourceArr[i] = temp;
+    }
+
+    return sourceArr;
   }
 });
