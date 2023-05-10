@@ -36,6 +36,7 @@ div.continent-modal-container {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   opacity: 0;
   display: none;
+  overflow: auto;
 }
 
 div.continent-modal-container button#closeContinentModal {
@@ -73,10 +74,6 @@ div.continent-filter {
   border: 1px solid rgba(0, 0, 0, 0);
   border-radius: 0.35rem;
   user-select: none;
-}
-
-div.continent-filter.active {
-  border: 1px solid #66bfdb71;
 }
 
 div.continent-filter.active div.continent-bg-image {
@@ -133,6 +130,10 @@ div.continent-filter#Africa div.continent-bg-image {
 
 div.continent-filter#Oceania div.continent-bg-image {
   background-image: url("../assets/img/oceania_satellite.jpg");
+}
+
+div.continent-filter#Antarctica div.continent-bg-image {
+  background-image: url("../assets/img/antarctica_satellite.jpg");
 }
 
 div.header-container {
