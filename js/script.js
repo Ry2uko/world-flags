@@ -1,13 +1,3 @@
-// Flag Ratio - Sizing & Exceptions
-// Generating Flags & Loading
-// JS Flag Objects
-// Filtering / Search (Regex)
-// Home Page Retouching
-// Responsive Design
-// Features such as filter by contintent, sort by name & reverse
-// Quiz button (redirect only)
-// Opening modal info (no info yet)
-
 $(document).ready(function(){
   const flagsContainer = $('.flags-container');
 
