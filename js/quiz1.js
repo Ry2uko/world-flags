@@ -1,3 +1,4 @@
+// Questions are grouped by similarities: moon, colors, stars, animals, etc.
 const quizOneQuestions = [
   [
     'Yemen',
@@ -263,7 +264,103 @@ const quizOneQuestions = [
     'Saint Vincent and the Grenadines',
     'Haiti',
     'Liechtenstein',
-    'Burundi'
+    'Burundi',
+    'Ghana',
+    'Burkina Faso',
   ]
 ];
 
+$(document).ready(function(){
+  $.get("https://restcountries.com/v3.1/all", countriesData => {
+    let parsedCountriesObj = parseData(countriesData);
+    let questions = generateQuestions(quizOneQuestions);
+
+    generateQuestion(parsedCountriesObj, questions);
+  });
+
+  // generate question
+  function generateQuestion(countriesData, questionData) {
+    $('.flag-image-container').empty();
+    $('.options-container').empty();
+
+    // random question
+    let randQuestion = questionData[Math.floor(Math.random() * questionData.length)];
+    let correctChoice = randQuestion.correctChoice;
+    // get country data from api (parsedCountriesObj)
+    let randFlag = countriesData[correctChoice];
+
+    // Load question
+    let questionChoices = shuffle([...randQuestion.otherChoices, correctChoice]); // all choices shuffled
+    if (correctChoice === 'Nepal') {
+      $('.flag-image-container').append(`
+        <img src="https://flagcdn.com/w320/${randFlag.code}.png" class="flag" data-code="${correctChoice}">
+      `);
+    } else {
+      $('.flag-image-container').append(`
+        <img src="https://flagcdn.com/w640/${randFlag.code}.png" class="flag" data-code="${correctChoice}">
+      `);
+    }
+
+    // Choices
+    questionChoices.forEach((choice, i) => {
+      $('.options-container').append(`
+        <div class="quiz-option" id="option${i+1}" data-name="${choice}">${choice}</div>
+      `);
+    });
+
+    // Click event
+    $('.quiz-option').on('click', function(){
+      let correctChoice = $('img.flag').attr('data-code');
+      let chosenChoice = $(this).attr('data-name');
+      
+      if (correctChoice === chosenChoice) {
+        generateQuestion(countriesData, questionData);
+      }
+    });
+  }
+
+  // generate questions: Multiple Choice
+  function generateQuestions(questionsData) {
+    const questions = [];
+
+    questionsData.forEach(qArr => {
+      for (let i = 0; i < qArr.length; i++) {
+        let otherChoices = [...qArr];
+        otherChoices.splice(i, 1); // remove the correct choice
+        otherChoices = shuffle(otherChoices).slice(0, 3);
+
+        questions.push({
+          correctChoice: qArr[i],
+          otherChoices
+        });
+      }
+    });
+
+    return questions;
+  };
+
+  // format countries data
+  function parseData(countriesData) {
+    const parsedCountriesObj = {};
+    countriesData.forEach(countryData => {
+      let cKey = countryData.name.common;
+      parsedCountriesObj[cKey] = {};
+      parsedCountriesObj[cKey].code = countryData.cca2.toLowerCase();
+      parsedCountriesObj[cKey].continent = countryData.continents[0];
+    });
+
+    return parsedCountriesObj;
+  };
+
+  // shuffle data using Fisher-Yates-Durstendfeld shuffle
+  function shuffle(sourceArr) {
+    for (let i = 0; i < sourceArr.length - 1; i++) {
+      let j = i + Math.floor(Math.random() * (sourceArr.length - i)); // random index
+      let temp = sourceArr[j];
+      sourceArr[j] = sourceArr[i];
+      sourceArr[i] = temp;
+    }
+
+    return sourceArr;
+  }
+});

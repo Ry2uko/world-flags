@@ -1,7 +1,7 @@
 $(document).ready(function(){
   const flagsContainer = $('.flags-container');
 
-  // load country data
+  // load countries data
   $.get("https://restcountries.com/v3.1/all", countriesData => {
     let parsedCountriesData = parseData(countriesData);
     let countriesDataShuffled = shuffle(parsedCountriesData);

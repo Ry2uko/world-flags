@@ -1,0 +1,73 @@
+@import 'styles.css';
+
+body, html {
+  background-color: var(--quiz-bg-color);
+  color: #fff;
+}
+
+h1.world-flags-title {
+  margin: 15px 20px;
+  font-size: 2.5rem;
+  font-family: var(--ff-Fira-Sans);
+}
+
+div.quiz-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 3rem;
+}
+
+div.quiz-flag-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  width: 960px;
+  height: 450px;
+}
+
+div.flag-image-container {
+  width: 640px;
+}
+
+div.flag-image-container img#quizFlag {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.25rem;
+}
+
+div.quiz-options-container {
+  width: 960px;
+  height: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div.options-container {
+  display: grid;
+  grid-template-columns: 440px 440px;
+  grid-gap: 15px;
+}
+
+div.options-container div.quiz-option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #10161f;
+  font-family: var(--ff-Fira-Sans);
+  font-size: 1.7rem;
+  padding: 18px 25px;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border: 1px solid #ffffff16;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  transition: ease-out 0.2s;
+}
+
+div.options-container div.quiz-option:hover {
+  border: 1px solid #ffffff8e;
+}

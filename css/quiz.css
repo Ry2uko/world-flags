@@ -1,7 +1,8 @@
 @import 'styles.css';
 
 body, html {
-  background-color: #0c1017;
+  background-color: var(--quiz-bg-color);
+  color: #fff;
 }
 
 a#backBtn {
@@ -12,7 +13,7 @@ a#backBtn {
   margin: 1.3rem 3rem;
   font-size: 3.5rem;
   border: none;
-  background-color: #0c1017;
+  background-color: var(--quiz-bg-color);
   color: #fff;
   cursor: pointer;
 }
