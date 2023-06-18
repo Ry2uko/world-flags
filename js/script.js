@@ -7,6 +7,8 @@ $(document).ready(function(){
     let countriesDataShuffled = shuffle(parsedCountriesData);
     let flagsCount = parsedCountriesData.length;
 
+    preloadFlags(parsedCountriesData); // preload all images
+
     // Load flags
     countriesDataShuffled.forEach(countryData => {
       let countryCode = countryData.code;
@@ -141,6 +143,14 @@ $(document).ready(function(){
       : $('#flagsCount').css('color', '#0de454');
     };
   }); 
+
+  // Preload Flags
+  function preloadFlags(countriesData) {
+    countriesData.forEach(countryObj => {
+      let image = new Image();
+      image.src = `https://flagcdn.com/w160/${countryObj.code}.png`
+    });
+  }
 
   // create a more cleaner object from countries data
   function parseData(countriesData) {

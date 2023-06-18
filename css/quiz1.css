@@ -12,11 +12,12 @@ h1.world-flags-title {
 }
 
 div.quiz-container {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 3rem;
+  margin-top: 1rem;
+  opacity: 0;
 }
 
 div.quiz-flag-container {
@@ -26,6 +27,17 @@ div.quiz-flag-container {
   overflow: hidden;
   width: 960px;
   height: 450px;
+}
+
+div.quiz-stats-container {
+  display: flex;
+  padding-bottom: 2rem;
+}
+
+div.quiz-stats-container span.quiz-stat {
+  font-size: 1.4rem;
+  font-family: var(--ff-Fira-Sans);
+  margin: 0 2rem;
 }
 
 div.flag-image-container {
@@ -40,7 +52,7 @@ div.flag-image-container img#quizFlag {
 
 div.quiz-options-container {
   width: 960px;
-  height: 320px;
+  height: 280px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,12 +72,15 @@ div.options-container div.quiz-option {
   font-family: var(--ff-Fira-Sans);
   font-size: 1.7rem;
   padding: 18px 25px;
+  min-height: 70px;
+  width: 440px;
   text-align: center;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   border: 1px solid #ffffff16;
   cursor: pointer;
   border-radius: 0.3rem;
   transition: ease-out 0.2s;
+  user-select: none;
 }
 
 div.options-container div.quiz-option:hover {
