@@ -270,18 +270,36 @@ const quizOneQuestions = [
   ]
 ];
 
+// Alternative Names
+const alternatives = {
+  "São Tomé and Príncipe": "Sao Tome and Principe",
+  "Türkiye": "Turkey",
+  "Côte d'Ivoire": "Ivory Coast",
+  "Åland Islands": "Aland Islands",
+  "Réunion": "Reunion",
+  "Burma": "Myanmar",
+  "East-Timor": "Timor-Leste",
+  "Swaziland": "Eswatini",
+  "Republic of China": "Taiwan",
+  "Republic of Macedonia": "North Macedonia",
+  "Democratic Republic of the Congo": "DR Congo",
+  "Czech Republic": "Czechia",
+  "Sahrawi Republic": "Western Sahara",
+  "Sahrawi Arab Democratic Republic": "Western Sahara"
+};
+
 let COUNTER_TOTAL = 1;
 const USER_STATS = {
-  "attempts": 0, 
+  "score": 0, 
   "time":  0, // seconds
-  "counter": 0,  // this is the score
-  "accuracy": 0, // counter / attempts
+  "counter": 0,
+  "accuracy": 0, // score / counter
 }
 
 $(document).ready(function(){
   $.get("https://restcountries.com/v3.1/all", countriesData => {
     let parsedCountriesObj = parseData(countriesData);
-    let questions = generateQuestions(quizOneQuestions).slice(0, 5);
+    let questions = generateQuestions(quizOneQuestions).slice(0, 50);
 
     preloadFlags();
     quizStart(parsedCountriesObj, questions);
@@ -290,7 +308,7 @@ $(document).ready(function(){
   // Start quiz
   function quizStart(countriesData, questionsData) {
     // Initialization
-    USER_STATS.attempts = 0;
+    USER_STATS.score = 0;
     USER_STATS.time = 0;
     USER_STATS.counter = 0;
     USER_STATS.accuracy = 0;
@@ -323,6 +341,16 @@ $(document).ready(function(){
     let correctChoice = randQuestion.correctChoice;
 
     let randFlag = countriesData[correctChoice];
+    if (randFlag === undefined)  {
+      for (let alt in alternatives) {
+        if (alternatives[alt] === correctChoice && countriesData[alt] !== undefined) {
+          randFlag = countriesData[alt];
+          break;
+        }
+      }
+    }
+
+    console.log(randFlag);
 
     // remove question from data
     questionData.splice(randIndex, 1);
@@ -347,30 +375,33 @@ $(document).ready(function(){
     $('.quiz-option').on('click', function(){
       let correctChoice = $('img.flag').attr('data-name');
       let chosenChoice = $(this).attr('data-name');
-      
+      $('.quiz-option').off('click');
       if (correctChoice === chosenChoice) {
         // Correct choice
+        USER_STATS.score += 1;
+        $(this).css({ 'border': '1px solid #5cd65c' });
+      } else {
+        // Wrong
+        $(this).css({ 'border': '1px solid #ff3333' });
+        $(`.quiz-option[data-name="${correctChoice}"]`).css({ 'border': '1px solid #5cd65c' });
+      }
+
+      USER_STATS.counter += 1;
+      let accuracy = Math.floor((USER_STATS.score / USER_STATS.counter)*100);
+      $('#quizCounter').text(`${USER_STATS.counter}/${COUNTER_TOTAL}`);
+      $('#quizAccuracy').text(`${accuracy}%`);
+
+      setTimeout(() => {
         $('#quizBox').animate({
           'opacity': 0
         }, ANIMATION_MS, () => {
           $('#quizBox').css('display', 'none');
           $('.flag-image-container').empty();
-          $('.quiz-option').off('click'); // THIS IS IMPORTANT
-
-          USER_STATS.counter += 1;
-          USER_STATS.attempts += 1;
-          let accuracy = Math.floor((USER_STATS.counter / USER_STATS.attempts)*100);
-          $('#quizCounter').text(`${USER_STATS.counter}/${COUNTER_TOTAL}`);
-          $('#quizAccuracy').text(`${accuracy}%`);
+          $('.quiz-option').css({ 'border': '1px solid #ffffff16' });
 
           generateQuestion(countriesData, questionData);
         });
-      } else {
-        // Wrong
-        USER_STATS.attempts += 1; 
-        let accuracy = Math.floor((USER_STATS.counter / USER_STATS.attempts)*100);
-        $('#quizAccuracy').text(`${accuracy}%`);
-      }
+      }, 250);
     });
   }
 

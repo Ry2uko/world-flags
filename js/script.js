@@ -1,3 +1,22 @@
+// Alternative Names
+const alternatives = {
+  "Sao Tome and Principe": "São Tomé and Príncipe",
+  "Türkiye": "Turkey",
+  "Côte d'Ivoire": "Ivory Coast",
+  "Aland Islands": "Åland Islands",
+  "Reunion": "Réunion",
+  "Burma": "Myanmar",
+  "East-Timor": "Timor-Leste",
+  "Swaziland": "Eswatini",
+  "Republic of China": "Taiwan",
+  "Republic of Macedonia": "North Macedonia",
+  "Democratic Republic of the Congo": "DR Congo",
+  "Czech Republic": "Czechia",
+  "Sahrawi Republic": "Western Sahara",
+  "Sahrawi Arab Democratic Republic": "Western Sahara"
+};
+
+
 $(document).ready(function(){
   const flagsContainer = $('.flags-container');
 
@@ -49,7 +68,24 @@ $(document).ready(function(){
       let searchVal = $(this).val().toLowerCase();
       
       filteredCountries = countriesDataShuffled.filter(country => {
-        return activeFilters.includes(country.continent) && country.name.match(new RegExp(`${searchVal}.*`, 'i'));
+        let altName = country.name;
+
+        // for alternative names
+        if (Object.values(alternatives).includes(country.name)) {
+          for (let alt in alternatives) {
+             if (alternatives[alt] === country.name) {
+              altName = alt;
+              break;
+             }
+          }
+
+          console.log(altName, country.name);
+        }
+
+        return activeFilters.includes(country.continent) && (
+          country.name.match(new RegExp(`${searchVal}.*`, 'i')) ||
+          altName.match(new RegExp(`${searchVal}.*`, 'i'))
+          );
       });
       let filteredCountriesArr = filteredCountries.reduce((a, b) => {
         a.push(b.name);

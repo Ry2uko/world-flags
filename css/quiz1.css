@@ -26,7 +26,8 @@ div.quiz-flag-container {
   align-items: center;
   overflow: hidden;
   width: 960px;
-  height: 450px;
+  min-height: 450px;
+  max-height: 640px;
 }
 
 div.quiz-stats-container {
@@ -42,6 +43,9 @@ div.quiz-stats-container span.quiz-stat {
 
 div.flag-image-container {
   width: 640px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 div.flag-image-container img#quizFlag {
@@ -79,10 +83,5 @@ div.options-container div.quiz-option {
   border: 1px solid #ffffff16;
   cursor: pointer;
   border-radius: 0.3rem;
-  transition: ease-out 0.2s;
   user-select: none;
-}
-
-div.options-container div.quiz-option:hover {
-  border: 1px solid #ffffff8e;
 }
