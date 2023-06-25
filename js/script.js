@@ -36,7 +36,7 @@ $(document).ready(function(){
       <div class="flag-container" data-country="${countryName}">
         <div class="flag-image-container-upper">
           <div class="flag-image-container">
-            <img src="https://flagcdn.com/w160/${countryCode}.png" class="flag" data-code="${countryCode}">
+            <img src="./assets/flags/${countryCode}.png" class="flag" data-code="${countryCode}">
           </div>
         </div>
         <div class="flag-country-container">
@@ -78,8 +78,6 @@ $(document).ready(function(){
               break;
              }
           }
-
-          console.log(altName, country.name);
         }
 
         return activeFilters.includes(country.continent) && (
@@ -166,9 +164,62 @@ $(document).ready(function(){
 
       setFlags();
     });
+    
+    // Focus-view flag
+    $('.flag').on('click', function() {
+      const ANIM_MS = 280;
+      let countryCode = $(this).attr('data-code');
+
+      // Preload flag
+      let image = new Image();
+
+      image.src = `../assets/flags/${countryCode}.png`;
+      $('.flag-focus-image').attr({
+        'src': `../assets/flags/${countryCode}.png`,
+        'data-code': countryCode
+      });
+
+      // transition
+      $('.parent-container').css({
+        'pointerEvents': 'none',
+        'userSelect': 'none'
+      }).animate({
+        'opacity': 0.2
+      }, ANIM_MS);
+
+      $('.flag-focus-parent-wrapper').css('display', 'flex').animate({
+        'opacity': 1
+      }, ANIM_MS);
+
+      // focus-out
+      $('.flag-focus-parent-wrapper').on('click', function(){
+        $('.parent-container').animate({
+          'opacity': 1
+        }, ANIM_MS, function(){
+          $(this).css({
+            'pointerEvents': 'auto',
+            'userSelect': 'auto'
+          });
+        });
+
+        $('.flag-focus-parent-wrapper').animate({
+          'opacity': 0
+        }, ANIM_MS, function() {
+          $(this).css('display', 'none');
+          $('.flag-focus-image').attr({
+            'src': '',
+            'data-code': ''
+          });
+        });
+
+        $('.flag-focus-parent-wrapper').off('click');
+      });
+
+      return; 
+    });
 
     // set flags count
-    const setFlags = () => {
+    function setFlags() {
       let totalFlags = parsedCountriesData.length;
       // set flag count
       let currFlagsCount = filteredCountries.length;
@@ -182,9 +233,24 @@ $(document).ready(function(){
 
   // Preload Flags
   function preloadFlags(countriesData) {
+    let continents = [
+      'asia_satellite',
+      'europe_satellite',
+      'north_america_satellite',
+      'south_america_satellite',
+      'africa_satellite',
+      'oceania_satellite',
+      'antarctica_satellite'
+    ];
+
+    continents.forEach(continent => {
+      let image = new Image();
+      image.src = `../assets/img/${continent}.jpg`
+    });
+
     countriesData.forEach(countryObj => {
       let image = new Image();
-      image.src = `https://flagcdn.com/w160/${countryObj.code}.png`
+      image.src = `../assets/flags/${countryObj.code}.png`
     });
   }
 

@@ -48,10 +48,14 @@ div.flag-image-container {
   align-items: center;
 }
 
-div.flag-image-container img#quizFlag {
+div.flag-image-container img.flag {
   height: 100%;
   width: 100%;
   border-radius: 0.25rem;
+}
+
+div.flag-image-container img.flag[data-name="Nepal"] {
+  width: 320px;
 }
 
 div.quiz-options-container {

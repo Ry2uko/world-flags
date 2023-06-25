@@ -272,20 +272,20 @@ const quizOneQuestions = [
 
 // Alternative Names
 const alternatives = {
+  // name in API: alternative name
   "São Tomé and Príncipe": "Sao Tome and Principe",
-  "Türkiye": "Turkey",
-  "Côte d'Ivoire": "Ivory Coast",
+  "Turkey": "Türkiye",
+  "Ivory Coast": "Côte d'Ivoire",
   "Åland Islands": "Aland Islands",
   "Réunion": "Reunion",
-  "Burma": "Myanmar",
-  "East-Timor": "Timor-Leste",
-  "Swaziland": "Eswatini",
-  "Republic of China": "Taiwan",
-  "Republic of Macedonia": "North Macedonia",
-  "Democratic Republic of the Congo": "DR Congo",
-  "Czech Republic": "Czechia",
-  "Sahrawi Republic": "Western Sahara",
-  "Sahrawi Arab Democratic Republic": "Western Sahara"
+  "Myanmar": "Burma",
+  "Timor-Leste": "East-Timor",
+  "Eswatini": "Swaziland",
+  "Taiwan": "Republic of China",
+  "North Macedonia": "Republic of Macedonia",
+  "DR Congo": "Democratic Republic of the Congo",
+  "Czechia": "Czech Republic",
+  "Western Sahara": "Sahrawi Arab Democratic Republic",
 };
 
 let COUNTER_TOTAL = 1;
@@ -299,7 +299,7 @@ const USER_STATS = {
 $(document).ready(function(){
   $.get("https://restcountries.com/v3.1/all", countriesData => {
     let parsedCountriesObj = parseData(countriesData);
-    let questions = generateQuestions(quizOneQuestions).slice(0, 50);
+    let questions = generateQuestions(quizOneQuestions).slice(0, 193);
 
     preloadFlags();
     quizStart(parsedCountriesObj, questions);
@@ -327,9 +327,7 @@ $(document).ready(function(){
   function preloadFlags(countriesData) {
     for (let country in countriesData) {
       let image = new Image();
-      let imageSize = (country === 'Nepal') ? 'w320' : 'w640';
-
-      image.src = `https://flagcdn.com/${imageSize}/${countriesData[country].code}.png`;
+      image.src = `../assets/flags/${countriesData[country].code}.png`;
     }
   }
 
@@ -350,8 +348,6 @@ $(document).ready(function(){
       }
     }
 
-    console.log(randFlag);
-
     // remove question from data
     questionData.splice(randIndex, 1);
 
@@ -361,9 +357,8 @@ $(document).ready(function(){
       $(`#option${i+1}`).attr('data-name', choice).text(choice);
     });
 
-    let imageSize = (correctChoice === 'Nepal') ? 'w320' : 'w640';
     $('.flag-image-container').append(`
-      <img class="flag" src="https://flagcdn.com/${imageSize}/${randFlag.code}.png" data-name="${correctChoice}" />
+      <img class="flag" src="./assets/flags/${randFlag.code}.png" data-name="${correctChoice}" />
     `);
 
     const ANIMATION_MS = 300;
@@ -376,6 +371,7 @@ $(document).ready(function(){
       let correctChoice = $('img.flag').attr('data-name');
       let chosenChoice = $(this).attr('data-name');
       $('.quiz-option').off('click');
+
       if (correctChoice === chosenChoice) {
         // Correct choice
         USER_STATS.score += 1;
@@ -385,10 +381,9 @@ $(document).ready(function(){
         $(this).css({ 'border': '1px solid #ff3333' });
         $(`.quiz-option[data-name="${correctChoice}"]`).css({ 'border': '1px solid #5cd65c' });
       }
-
+      
       USER_STATS.counter += 1;
       let accuracy = Math.floor((USER_STATS.score / USER_STATS.counter)*100);
-      $('#quizCounter').text(`${USER_STATS.counter}/${COUNTER_TOTAL}`);
       $('#quizAccuracy').text(`${accuracy}%`);
 
       setTimeout(() => {
@@ -398,7 +393,7 @@ $(document).ready(function(){
           $('#quizBox').css('display', 'none');
           $('.flag-image-container').empty();
           $('.quiz-option').css({ 'border': '1px solid #ffffff16' });
-
+          $('#quizCounter').text(`${USER_STATS.counter}/${COUNTER_TOTAL}`);
           generateQuestion(countriesData, questionData);
         });
       }, 250);
