@@ -5,10 +5,125 @@ body, html {
   color: #fff;
 }
 
-h1.world-flags-title {
+h1.world-flags-quiz-title {
   margin: 15px 20px;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-family: var(--ff-Fira-Sans);
+  z-index: 5;
+}
+
+h1.world-flags-quiz-title a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+div.results-box {
+  position: absolute;
+  z-index: 9998;
+  display: none;
+  opacity: 0;
+  border: 1px solid #ffffff0f;
+  background-color: #0f141d;
+  width: 800px;
+  height: 580px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 0.3rem;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem 2rem;
+  font-family: var(--ff-Fira-Sans);
+}
+
+div.results-box h4.modal-title {
+  font-size: 1.3rem;
+  margin-bottom: 5rem;
+  opacity: 0.9;
+}
+
+div.results-box span.modal-text {
+  font-size: 1.5rem;
+}
+
+div.results-box div.results-container {
+  margin: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 85px;
+}
+
+div.results-box div.result-stat-container {
+  margin: 0 2.5rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+div.results-box span.result-subtitle {
+  font-size: 1.5rem;
+}
+
+div.results-box span.result-stat {
+  font-family: var(--ff-Ubuntu);
+  font-weight: bold;
+  margin: 5px 0;
+  font-size: 2.4rem;
+}
+
+div.results-box div.quiz-game-mode-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+div.results-box span.quiz-game-mode-subtitle {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+}
+
+div.results-box span#quizGameMode {
+  margin: 10px 0;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+div.results-box div.results-box-btn-container {
+  margin-top: 4rem;
+  display: flex;
+  justify-content: center;
+}
+
+div.results-box button.results-box-btn {
+  border-radius: 0.8rem;
+  border: none;
+  font-size: 1.55rem;
+  padding: 12px 35px;
+  margin: 0 10px;
+  cursor: pointer;
+  color: #0F141D;
+  font-family: var(--ff-Ubuntu);
+  transition: transform 0.3s;
+}
+
+div.results-box button.results-box-btn:hover {
+  transform: scale(1.04);
+}
+
+button#resultsResetBtn {
+  background-color: #2dd74c;
+  border: 1px solid #2dd74c;
+}
+
+button#resultsOtherModesBtn {
+  background-color: #0F141D;
+  color: #ffffffe1;
+  border: 1px solid #ffffffe1;
 }
 
 div.quiz-container {
@@ -38,7 +153,8 @@ div.quiz-stats-container {
 div.quiz-stats-container span.quiz-stat {
   font-size: 1.4rem;
   font-family: var(--ff-Fira-Sans);
-  margin: 0 2rem;
+  width: 120px;
+  text-align: center;
 }
 
 div.flag-image-container {
@@ -54,8 +170,26 @@ div.flag-image-container img.flag {
   border-radius: 0.25rem;
 }
 
+/* Irregular Flag */
 div.flag-image-container img.flag[data-name="Nepal"] {
   width: 320px;
+}
+
+/* 1:1 Aspect Ratio */
+div.flag-image-container img.flag[data-name="Vatican City"] {
+  width: 450px;
+}
+
+div.flag-image-container img.flag[data-name="Belgium"] {
+  width: 450px;
+}
+
+div.flag-image-container img.flag[data-name="Switzerland"] {
+  width: 450px;
+}
+
+div.flag-image-container img.flag[data-name="Niger"] {
+  width: 450px;
 }
 
 div.quiz-options-container {

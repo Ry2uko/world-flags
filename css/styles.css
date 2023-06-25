@@ -20,6 +20,17 @@ body, html {
   background-color: var(--main-bg-color);
 }
 
+h1.world-flags-title {
+  position: absolute;
+  left: 0;
+  margin-left: 5rem;
+  margin-bottom: 5px;
+  font-size: 2rem;
+  font-family: var(--ff-Ubuntu);
+  z-index: 5;
+  color: #fff;
+}
+
 div.parent-container {
   position: relative;
 }
@@ -214,7 +225,7 @@ div.header-container a#quizBtn:hover {
 }
 
 div.header-container button#continentFilterBtn {
-  margin-left: 1.8rem;
+  margin-left: 2rem;
   border: none;
   background-color: var(--main-bg-color);
   color: #fffffff5;

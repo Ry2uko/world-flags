@@ -288,7 +288,16 @@ const alternatives = {
   "Western Sahara": "Sahrawi Arab Democratic Republic",
 };
 
+const formatTime = s => {
+  const minutes = Math.floor(s / 60);
+  const seconds = s % 60;
+  const formattedMinutes = minutes.toString().padStart(2, '0');
+  const formattedSeconds = seconds.toString().padStart(2, '0');
+  return `${formattedMinutes}:${formattedSeconds}`;
+}
+
 let COUNTER_TOTAL = 1;
+let timerInterval;
 const USER_STATS = {
   "score": 0, 
   "time":  0, // seconds
@@ -296,13 +305,45 @@ const USER_STATS = {
   "accuracy": 0, // score / counter
 }
 
+// Audio
+/* Audio are from https://www.zapsplat.com/ */
+const correctAudio = new Audio('../assets/sfx/correct.mp3');
+const wrongAudio = new Audio('../assets/sfx/wrong.mp3');
+const successAudio = new Audio('../assets/sfx/success.mp3');
+const failAudio = new Audio('../assets/sfx/fail.mp3');
+const perfectAudio = new Audio('../assets/sfx/perfect.mp3');
+
+// set volume
+correctAudio.volume = 0.3;
+wrongAudio.volume = 0.5;
+successAudio.volume = 0.5;
+failAudio.volume = 0.5;
+perfectAudio.volume = 0.8;
+
 $(document).ready(function(){
   $.get("https://restcountries.com/v3.1/all", countriesData => {
     let parsedCountriesObj = parseData(countriesData);
-    let questions = generateQuestions(quizOneQuestions).slice(0, 193);
+    const questionsCount = 5; // Max: 199 Questions
+    let questions = generateQuestions(quizOneQuestions).slice(0, questionsCount); 
 
     preloadFlags();
     quizStart(parsedCountriesObj, questions);
+
+    // Try again
+    $('#resultsResetBtn').on('click', () => {
+      let questions = generateQuestions(quizOneQuestions).slice(0, questionsCount);
+      $('.results-box').animate({
+        'opacity': 0
+      }, 500, function(){
+        $(this).css('display', 'none');
+        quizStart(parsedCountriesObj, questions);
+      });
+    });
+
+    // Other modes
+    $('#resultsOtherModesBtn').on('click', () => {
+      window.location.replace('./quiz.html');
+    });
   });
 
   // Start quiz
@@ -315,15 +356,16 @@ $(document).ready(function(){
 
     COUNTER_TOTAL = questionsData.length;
 
+    // Start quiz
     $('#quizCounter').text(`${USER_STATS.counter}/${COUNTER_TOTAL}`);
-    $('#quizAccuracy').text(`${USER_STATS.accuracy}%`);
+    $('#quizAccuracy').text(`${USER_STATS.accuracy}%`).attr('title', `${USER_STATS.score} / ${COUNTER_TOTAL}`);
     startTimer();
     
     // Generate first question
     generateQuestion(countriesData, questionsData);
   }
 
-  // Pre-load images
+  // Preload images
   function preloadFlags(countriesData) {
     for (let country in countriesData) {
       let image = new Image();
@@ -361,7 +403,7 @@ $(document).ready(function(){
       <img class="flag" src="./assets/flags/${randFlag.code}.png" data-name="${correctChoice}" />
     `);
 
-    const ANIMATION_MS = 300;
+    const ANIMATION_MS = 250;
     $('#quizBox').css('display', 'flex').animate({
       'opacity': 1
     }, ANIMATION_MS);
@@ -374,18 +416,70 @@ $(document).ready(function(){
 
       if (correctChoice === chosenChoice) {
         // Correct choice
+        correctAudio.play();
+        correctAudio.currentTime = 0;
         USER_STATS.score += 1;
         $(this).css({ 'border': '1px solid #5cd65c' });
       } else {
         // Wrong
+        wrongAudio.play();
+        wrongAudio.currentTime = 0;
         $(this).css({ 'border': '1px solid #ff3333' });
         $(`.quiz-option[data-name="${correctChoice}"]`).css({ 'border': '1px solid #5cd65c' });
       }
-      
-      USER_STATS.counter += 1;
-      let accuracy = Math.floor((USER_STATS.score / USER_STATS.counter)*100);
-      $('#quizAccuracy').text(`${accuracy}%`);
 
+      USER_STATS.counter += 1;
+      let accuracy = Math.round((USER_STATS.score / USER_STATS.counter)*100);
+      USER_STATS.accuracy = accuracy;
+      $('#quizCounter').text(`${USER_STATS.counter}/${COUNTER_TOTAL}`);
+      $('#quizAccuracy').text(`${accuracy}%`).attr('title', `${USER_STATS.score} / ${COUNTER_TOTAL}`);
+
+      // Quiz has ended
+      if (USER_STATS.counter === COUNTER_TOTAL) {
+        let RESULTS_COLOR = '#fff', MODAL_TEXT = 'Well done! You got:';
+
+        setTimeout(() => {
+          if (USER_STATS.accuracy >= 95) {
+            // Subarashii!!
+            perfectAudio.play();
+            perfectAudio.currentTime = 0;
+            RESULTS_COLOR = '#3385ff';
+            MODAL_TEXT = 'Amazing!! You got:';
+            // add confetti here (later)
+          } else if (USER_STATS.accuracy >= 50) { 
+            // Well done!
+            successAudio.play();
+            successAudio.currentTime = 0;
+            RESULTS_COLOR = '#6f3';
+            MODAL_TEXT = 'Well done! You got:';
+          } else {
+            // You did great! But, there are still room to improve
+            failAudio.play();
+            failAudio.currentTime = 0;
+            RESULTS_COLOR = '#f33';
+            MODAL_TEXT = 'Nice try! You got:';
+          }
+
+          $('.modal-text').text(MODAL_TEXT);
+          $('#quizResultAccuracy').css('color', RESULTS_COLOR);
+          $('#quizResultScore').css('color', RESULTS_COLOR);
+          $('#quizResultTime').css('color', RESULTS_COLOR);
+          $('#resultsResetBtn').css({
+            'backgroundColor': RESULTS_COLOR,
+            'borderColor': RESULTS_COLOR
+          });
+
+          $('#quizResultScore').text(`${USER_STATS.score} / ${COUNTER_TOTAL}`);
+          $('#quizResultAccuracy').text(`${USER_STATS.accuracy}%`);
+          $('#quizResultTime').text(formatTime(USER_STATS.time));
+
+          $('.results-box').css('display', 'flex').animate({
+            'opacity': 1
+          }, 500);
+        }, 550);
+      }
+
+      // New question
       setTimeout(() => {
         $('#quizBox').animate({
           'opacity': 0
@@ -393,8 +487,8 @@ $(document).ready(function(){
           $('#quizBox').css('display', 'none');
           $('.flag-image-container').empty();
           $('.quiz-option').css({ 'border': '1px solid #ffffff16' });
-          $('#quizCounter').text(`${USER_STATS.counter}/${COUNTER_TOTAL}`);
-          generateQuestion(countriesData, questionData);
+
+          if (USER_STATS.counter !== COUNTER_TOTAL) generateQuestion(countriesData, questionData);
         });
       }, 250);
     });
@@ -424,15 +518,8 @@ $(document).ready(function(){
   function startTimer() {
     $('#quizTimer').text('00:00');
 
-    const formatTime = s => {
-      const minutes = Math.floor(s / 60);
-      const seconds = s % 60;
-      const formattedMinutes = minutes.toString().padStart(2, '0');
-      const formattedSeconds = seconds.toString().padStart(2, '0');
-      return `${formattedMinutes}:${formattedSeconds}`;
-    }
-
-    setInterval(() => {
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
       USER_STATS.time += 1;
       $('#quizTimer').text(formatTime(USER_STATS.time));
     }, 1000);

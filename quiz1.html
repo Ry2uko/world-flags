@@ -12,9 +12,35 @@
     <script src="https://kit.fontawesome.com/b40850cb13.js" crossorigin="anonymous"></script>
   </head>
   <body>
-    <h1 class="world-flags-title">
-      World Flags
-    </h1>
+    <h1 class="world-flags-quiz-title"><a href="./index.html">
+      World Flags: Quiz
+    </a></h1>
+    <div class="results-box">
+      <h4 class="modal-title">- World Flags: Quiz -</h4>
+      <span class="modal-text">Well done! You got:</span>
+      <div class="results-container">
+        <div class="score-container result-stat-container">
+          <span class="score-subtitle result-subtitle">Score</span>
+          <span id="quizResultScore" class="result-stat"> 193 / 199</span>
+        </div>
+        <div class="accuracy-container result-stat-container">
+          <span class="accuracy-subtitle result-subtitle">Accuracy</span>
+          <span id="quizResultAccuracy" class="result-stat">97%</span>
+        </div>
+        <div class="time-container result-stat-container">
+          <span class="time-subtitle result-subtitle">Time</span>
+          <span id="quizResultTime" class="result-stat">08:14</span>
+        </div>
+      </div>
+      <div class="quiz-game-mode-container">
+        <span class="quiz-game-mode-subtitle">Game mode</span>
+        <span id="quizGameMode">Multiple Choice I</span>
+      </div>
+      <div class="results-box-btn-container">
+        <button type="button" class="results-box-btn" id="resultsResetBtn">Try Again</button>
+        <button type="button" class="results-box-btn" id="resultsOtherModesBtn">Other Modes</button>
+      </div>
+    </div>
     <div class="quiz-container" id="quizBox">
       <div class="quiz-stats-container">
         <span id="quizCounter" class="quiz-stat"></span>
