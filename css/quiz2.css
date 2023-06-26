@@ -3,6 +3,7 @@
 body, html {
   background-color: var(--quiz-bg-color);
   color: #fff;
+  overflow: auto;
 }
 
 h1.world-flags-quiz-title {
@@ -127,22 +128,11 @@ button#resultsOtherModesBtn {
 }
 
 div.quiz-container {
-  display: none;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 1rem;
+  display: none;
   opacity: 0;
-}
-
-div.quiz-flag-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  width: 960px;
-  min-height: 450px;
-  max-height: 640px;
 }
 
 div.quiz-stats-container {
@@ -157,71 +147,54 @@ div.quiz-stats-container span.quiz-stat {
   text-align: center;
 }
 
-div.flag-image-container {
-  width: 640px;
+div.quiz-flag-name-container {
+  margin: 1rem 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  user-select: none;
+  height: 360px;
 }
 
-div.flag-image-container img.flag {
-  height: 100%;
-  width: 100%;
-  border-radius: 0.25rem;
-  pointer-events: none;
-}
-
-/* Irregular Flag */
-div.flag-image-container img.flag[data-name="Nepal"] {
-  width: 320px;
-}
-
-/* 1:1 Aspect Ratio */
-div.flag-image-container img.flag[data-name="Vatican City"] {
-  width: 450px;
-}
-
-div.flag-image-container img.flag[data-name="Belgium"] {
-  width: 450px;
-}
-
-div.flag-image-container img.flag[data-name="Switzerland"] {
-  width: 450px;
-}
-
-div.flag-image-container img.flag[data-name="Niger"] {
-  width: 450px;
+div.quiz-flag-name-container h4#questionFlagName {
+  font-family: var(--ff-Ubuntu);
+  font-size: 4rem;
 }
 
 div.quiz-options-container {
-  width: 960px;
-  height: 280px;
+  margin-top: 3rem;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
-div.options-container {
-  display: grid;
-  grid-template-columns: 440px 440px;
-  grid-gap: 15px;
+div.quiz-options-container div.options-container {
+  display: flex;
 }
 
 div.options-container div.quiz-option {
+  margin: 0 3.5rem;
+  padding: 10px;
+  border-radius: 0.25rem;
   display: flex;
-  justify-content: center;
+  background-color: #0C1017;
   align-items: center;
-  background-color: #10161f;
-  font-family: var(--ff-Fira-Sans);
-  font-size: 1.7rem;
-  padding: 18px 25px;
-  min-height: 70px;
-  width: 440px;
-  text-align: center;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-  border: 1px solid #ffffff16;
+  justify-content: center;
+  width: 320px;
   cursor: pointer;
+  transition: transform ease-out 0.2s;
+}
+
+div.options-container div.quiz-option:hover {
+  transform: scale(1.025);
+}
+
+div.quiz-option img.option-flag {
   border-radius: 0.3rem;
+  width: 100%;
+  pointer-events: none;
   user-select: none;
+}
+
+/* Irregular Flag */
+div.quiz-option[data-name="Nepal"] img.option-flag {
+  width: 200px;
 }

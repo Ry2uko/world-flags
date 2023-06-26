@@ -25,7 +25,6 @@ $(document).ready(function(){
   });
 });
 
-// Start quiz
 function quizStart(countriesData, questionsData) {
   // Initialization
   USER_STATS.score = 0;
@@ -39,29 +38,16 @@ function quizStart(countriesData, questionsData) {
   $('#quizCounter').text(`${USER_STATS.counter}/${COUNTER_TOTAL}`);
   $('#quizAccuracy').text(`${USER_STATS.accuracy}%`).attr('title', `${USER_STATS.score} / ${COUNTER_TOTAL}`);
   startTimer();
-  
+
   // Generate first question
   generateQuestion(countriesData, questionsData);
 }
 
-// generate question
 function generateQuestion(countriesData, questionsData) {
   // random question
   let randIndex = Math.floor(Math.random() * questionsData.length);
   let randQuestion = questionsData[randIndex];
   let correctChoice = randQuestion.correctChoice;
-
-  let correctFlag = countriesData[correctChoice];
-
-  // check if alternative name is used
-  if (correctFlag === undefined)  {
-    for (let alt in alternatives) {
-      if (alternatives[alt] === correctChoice && countriesData[alt] !== undefined) {
-        correctFlag = countriesData[alt];
-        break;
-      }
-    }
-  }
 
   // remove question from data
   questionsData.splice(randIndex, 1);
@@ -69,11 +55,24 @@ function generateQuestion(countriesData, questionsData) {
   // Load question
   let questionChoices = shuffle([...randQuestion.otherChoices, correctChoice]); // all choices shuffled
   questionChoices.forEach((choice, i) => {
-    $(`#option${i+1}`).attr('data-name', choice).text(choice);
+    let choiceFlag = countriesData[choice];
+
+    // check if alternative name is used
+    if (choiceFlag === undefined)  {
+      for (let alt in alternatives) {
+        if (alternatives[alt] === choice && countriesData[alt] !== undefined) {
+          choiceFlag = countriesData[alt];
+          break;
+        }
+      }
+    }
+
+    let choiceFlagCode = choiceFlag.code;
+    $(`#option${i+1}`).attr('data-name', choice).append(
+      `<img class="option-flag" src="./assets/flags/${choiceFlagCode}.png" />`
+    );
   });
-  $('.flag-image-container').append(`
-    <img class="flag" src="./assets/flags/${correctFlag.code}.png" data-name="${correctChoice}" />
-  `);
+  $('#questionFlagName').text(correctChoice);
 
   const ANIMATION_MS = 250;
   $('#quizBox').css('display', 'flex').animate({
@@ -86,21 +85,21 @@ function generateQuestion(countriesData, questionsData) {
     $('.quiz-option').off('click');
 
     if (correctChoice === chosenChoice) {
-      // Correct choice
+      // Correct
       playAudio('correct');
       USER_STATS.score += 1;
-      $(this).css({ 'border': '1px solid #5cd65c' });
-    } else {
+      $(this).css({ 'backgroundColor': 'rgba(92, 214, 92, 0.9)' });
+    } else {  
       // Wrong
       playAudio('wrong');
-      $(this).css({ 'border': '1px solid #ff3333' });
-      $(`.quiz-option[data-name="${correctChoice}"]`).css({ 'border': '1px solid #5cd65c' });
+      $(this).css({ 'backgroundColor': 'rgba(255, 51, 51, 0.9)' });
+      $(`.quiz-option[data-name="${correctChoice}"]`).css({ 'backgroundColor': 'rgba(92, 214, 92, 0.9)' });
     }
 
     // Update stats
-    USER_STATS.counter += 1;
+    USER_STATS.counter += 1
     let accuracy = Math.round((USER_STATS.score / USER_STATS.counter)*100);
-    USER_STATS.accuracy = accuracy;
+    USER_STATS.accuracy = accuracy;   
     $('#quizCounter').text(`${USER_STATS.counter}/${COUNTER_TOTAL}`);
     $('#quizAccuracy').text(`${accuracy}%`).attr('title', `${USER_STATS.score} / ${COUNTER_TOTAL}`);
 
@@ -152,8 +151,7 @@ function generateQuestion(countriesData, questionsData) {
         'opacity': 0
       }, ANIMATION_MS, () => {
         $('#quizBox').css('display', 'none');
-        $('.flag-image-container').empty();
-        $('.quiz-option').css({ 'border': '1px solid #ffffff16' });
+        $('.quiz-option').css('backgroundColor', '#0C1017').empty();
 
         if (USER_STATS.counter !== COUNTER_TOTAL) generateQuestion(countriesData, questionsData);
       });
