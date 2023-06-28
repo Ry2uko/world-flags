@@ -192,11 +192,28 @@ div.data-tags-container {
 div.data-tags-container span.flags-count {
   position: absolute;
   left: 0;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   margin-left: 5rem;
   color: #fff;
   font-family: var(--ff-Fira-Sans);
   font-size: 1.3rem;
+}
+
+div.data-tags-container button#sortFlagsBtn {
+  position: absolute;
+  right: 0;
+  margin-top: 1.5rem;
+  margin-right: 5rem;
+  background-color: var(--main-bg-color);
+  color: #fff;
+  border: none;
+  font-size: 1.7rem;
+  cursor: pointer;
+  transition: transform ease-out 0.2s;
+}
+
+div.data-tags-container button#sortFlagsBtn:hover {
+  transform: scale(1.1);
 }
 
 span.flags-count span.colored {
@@ -265,7 +282,7 @@ input:focus {
 }
 
 div.body-container {
-  padding: 2rem 4rem;
+  padding: 2.5rem 4rem;
 }
 
 div.flags-container {
@@ -332,6 +349,22 @@ div.flag-container span.flag-country {
   font-size: 1.4rem;
   font-family: 'Ubuntu', sans-serif;
   text-align: center;
+}
+
+span.credits {
+  font-family: var(--ff-Fira-Sans);
+  font-size: 1.16rem;
+  opacity: 0.8;
+  margin: 1.5rem 0 3rem 0;
+  width: 100%;
+  display: block;
+  text-align: center;
+  color: #fff;
+}
+
+span.credits a {
+  text-decoration: none;
+  color: #00a2ff;
 }
 
 /* Responsive Design */
