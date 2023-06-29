@@ -1,0 +1,38 @@
+@import "styles.css"; 
+@import "quiz1.css";
+
+div.quiz-container  {
+  margin-top: 3rem;
+}
+
+div.quiz-container div.quiz-input-container {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+div.quiz-input-container input#quizInput {
+  width: 520px;
+  height: 60px;  
+  background-color: #0e141c;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border: 1px solid #ffffff2a;
+  border-radius: 0.3rem;
+  color: #fff;
+  font-family: var(--ff-Fira-Code);
+  font-size: 1.6rem;
+  padding: 5px 10px;
+  transition: 0.2s;
+}
+
+div.quiz-input-container span#correctAnswer {
+  opacity: 0;
+  user-select: none;
+  pointer-events: none;
+  font-family: var(--ff-Fira-Code);
+  font-size: 1.4rem;
+  margin-top: 1.5rem;
+  color: #ff3333;
+}

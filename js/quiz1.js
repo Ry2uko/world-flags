@@ -25,26 +25,7 @@ $(document).ready(function(){
   });
 });
 
-// Start quiz
-function quizStart(countriesData, questionsData) {
-  // Initialization
-  USER_STATS.score = 0;
-  USER_STATS.time = 0;
-  USER_STATS.counter = 0;
-  USER_STATS.accuracy = 0;
-
-  COUNTER_TOTAL = questionsData.length;
-
-  // Start quiz
-  $('#quizCounter').text(`${USER_STATS.counter}/${COUNTER_TOTAL}`);
-  $('#quizAccuracy').text(`${USER_STATS.accuracy}%`).attr('title', `${USER_STATS.score} / ${COUNTER_TOTAL}`);
-  startTimer();
-  
-  // Generate first question
-  generateQuestion(countriesData, questionsData);
-}
-
-// generate question
+// Generate question
 function generateQuestion(countriesData, questionsData) {
   // random question
   let randIndex = Math.floor(Math.random() * questionsData.length);

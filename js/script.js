@@ -166,7 +166,61 @@ $(document).ready(function(){
     });
     
     // Focus-view flag
-    $('.flag').on('click', function(){
+    $('.flag').on('click', handleFlagClick);
+
+    // Sort flags
+    $('#sortFlagsBtn').on('click', function(){
+      let flagsArr = $('.flag-container').toArray(), sorted = [];
+      if ($(this).attr('data-sort') === 'none') {
+        // Sort alphabetically
+        sorted = flagsArr.sort((a, b) => {
+          let dataCountryA = $(a).attr('data-country');
+          let dataCountryB = $(b).attr('data-country');
+    
+          return dataCountryA < dataCountryB ? -1 : dataCountryA > dataCountryB ? 1 : 0;
+        });
+
+        $(this).attr('data-sort', 'ascending');
+        $('#sortFlagsBtn i').removeClass('fa-sort').addClass('fa-sort-down');
+      } else if ($(this).attr('data-sort') === 'ascending') {
+        // Sort alphabetically (reversed)
+        sorted = flagsArr.sort((a, b) => {
+          let dataCountryA = $(a).attr('data-country');
+          let dataCountryB = $(b).attr('data-country');
+    
+          return dataCountryA < dataCountryB ? 1 : dataCountryA > dataCountryB ? -1 : 0;
+        });
+
+        $(this).attr('data-sort', 'descending');
+        $('#sortFlagsBtn i').removeClass('fa-sort-down').addClass('fa-sort-up');
+      } else {
+        // No sort (shuffled)
+        sorted = shuffle(flagsArr);
+        $(this).attr('data-sort', 'none');
+        $('#sortFlagsBtn i').removeClass('fa-sort-up').addClass('fa-sort');
+      }
+
+      $('.flags-container').empty();
+      sorted.forEach(flagContainer => {
+        $('.flags-container').append(flagContainer);
+      });
+      $('.flag').on('click', handleFlagClick);
+    })
+
+    // set flags count
+    function setFlags() {
+      let totalFlags = parsedCountriesData.length;
+      // set flag count
+      let currFlagsCount = filteredCountries.length;
+      $('#flagsCount').text(currFlagsCount);
+
+      currFlagsCount === 0 ? $('#flagsCount').css('color', '#e61e10')
+      : currFlagsCount < totalFlags ? $('#flagsCount').css('color', '#cee40d')
+      : $('#flagsCount').css('color', '#0de454');
+    };
+
+    // flag on click
+    function handleFlagClick() {
       const ANIM_MS = 280;
       let countryCode = $(this).attr('data-code');
 
@@ -216,58 +270,7 @@ $(document).ready(function(){
       });
 
       return; 
-    });
-
-    // Sort flags
-    $('#sortFlagsBtn').on('click', function(){
-      let flagsArr = $('.flag-container').toArray(), sorted = [];
-      if ($(this).attr('data-sort') === 'none') {
-        // Sort alphabetically
-        sorted = flagsArr.sort((a, b) => {
-          let dataCountryA = $(a).attr('data-country');
-          let dataCountryB = $(b).attr('data-country');
-    
-          return dataCountryA < dataCountryB ? -1 : dataCountryA > dataCountryB ? 1 : 0;
-        });
-
-        $(this).attr('data-sort', 'ascending');
-        $('#sortFlagsBtn i').removeClass('fa-sort').addClass('fa-sort-down');
-      } else if ($(this).attr('data-sort') === 'ascending') {
-        // Sort alphabetically (reversed)
-        sorted = flagsArr.sort((a, b) => {
-          let dataCountryA = $(a).attr('data-country');
-          let dataCountryB = $(b).attr('data-country');
-    
-          return dataCountryA < dataCountryB ? 1 : dataCountryA > dataCountryB ? -1 : 0;
-        });
-
-        $(this).attr('data-sort', 'descending');
-        $('#sortFlagsBtn i').removeClass('fa-sort-down').addClass('fa-sort-up');
-      } else {
-        // No sort (shuffled)
-        sorted = shuffle(flagsArr);
-        $(this).attr('data-sort', 'none');
-        $('#sortFlagsBtn i').removeClass('fa-sort-up').addClass('fa-sort');
-      }
-
-      $('.flags-container').empty();
-      sorted.forEach(flagContainer => {
-        $('.flags-container').append(flagContainer);
-      });
-    })
-
-    // set flags count
-    function setFlags() {
-      let totalFlags = parsedCountriesData.length;
-      // set flag count
-      let currFlagsCount = filteredCountries.length;
-      $('#flagsCount').text(currFlagsCount);
-
-      currFlagsCount === 0 ? $('#flagsCount').css('color', '#e61e10')
-      : currFlagsCount < totalFlags ? $('#flagsCount').css('color', '#cee40d')
-      : $('#flagsCount').css('color', '#0de454');
-    };
-
+    }
   }); 
 });
 

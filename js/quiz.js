@@ -276,6 +276,7 @@ const multipleChoiceQuestions = [
 const alternatives = {
   // name in API (restcountries): alternative name
   "São Tomé and Príncipe": "Sao Tome and Principe",
+  "Micronesia": "Federated States of Micronesia",
   "Turkey": "Türkiye",
   "Ivory Coast": "Côte d'Ivoire",
   "Åland Islands": "Aland Islands",
@@ -284,7 +285,7 @@ const alternatives = {
   "Timor-Leste": "East-Timor",
   "Eswatini": "Swaziland",
   "Taiwan": "Republic of China",
-  "North Macedonia": "Republic of Macedonia",
+  "North Macedonia": "Macedonia",
   "DR Congo": "Democratic Republic of the Congo",
   "Czechia": "Czech Republic",
   "Western Sahara": "Sahrawi Arab Democratic Republic",
@@ -363,6 +364,25 @@ function generateQuestions(questionsData) {
   return shuffle(questions);
 };
 
+// Start quiz
+function quizStart(countriesData, questionsData) {
+  // Initialization
+  USER_STATS.score = 0;
+  USER_STATS.time = 0;
+  USER_STATS.counter = 0;
+  USER_STATS.accuracy = 0;
+
+  COUNTER_TOTAL = questionsData.length;
+
+  // Start quiz
+  $('#quizCounter').text(`${USER_STATS.counter}/${COUNTER_TOTAL}`);
+  $('#quizAccuracy').text(`${USER_STATS.accuracy}%`).attr('title', `${USER_STATS.score} / ${COUNTER_TOTAL}`);
+  startTimer();
+
+  // Generate first question
+  generateQuestion(countriesData, questionsData);
+}
+
 let COUNTER_TOTAL = 1;
 let timerInterval;
 const USER_STATS = {
@@ -379,12 +399,16 @@ const wrongAudio = new Audio('../assets/sfx/wrong.mp3');
 const successAudio = new Audio('../assets/sfx/success.mp3');
 const failAudio = new Audio('../assets/sfx/fail.mp3');
 const amazingAudio = new Audio('../assets/sfx/amazing.mp3');
+const incorrectAudio = new Audio('../assets/sfx/incorrect.mp3');
+const correct2Audio = new Audio('../assets/sfx/correct2.mp3');
 
 // set volume
 correctAudio.volume = 0.3;
 wrongAudio.volume = 0.5;
 successAudio.volume = 0.5;
 failAudio.volume = 0.5;
+incorrectAudio.volume = 0.5;
+correct2Audio.volume = 0.5;
 amazingAudio.volume = 0.8;
 
 // playing audio
@@ -409,5 +433,13 @@ const playAudio = audioName => {
     case 'amazing':
       amazingAudio.play();
       amazingAudio.currentTime = 0;
+      break;
+    case 'incorrect':
+      incorrectAudio.play();
+      incorrectAudio.currentTime = 0;
+      break;
+    case 'correct2':
+      correct2Audio.play();
+      correct2Audio.currentTime = 0;
   }
 };

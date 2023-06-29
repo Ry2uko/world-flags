@@ -4,11 +4,11 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>World Flags: Multiple Choice II</title>
+    <title>World Flags: Quiz</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Fira+Sans&family=Londrina+Solid&family=Ubuntu&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/quiz2.css" type="text/css" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Fira+Sans&family=Londrina+Solid&family=Ubuntu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/quiz3.css" type="text/css" />
     <script src="https://kit.fontawesome.com/b40850cb13.js" crossorigin="anonymous"></script>
   </head>
   <body>
@@ -20,10 +20,6 @@
       <h4 class="modal-title">- World Flags: Quiz -</h4>
       <span class="modal-text">Well done! You got:</span>
       <div class="results-container">
-        <div class="score-container result-stat-container">
-          <span class="score-subtitle result-subtitle">Score</span>
-          <span id="quizResultScore" class="result-stat"></span>
-        </div>
         <div class="accuracy-container result-stat-container">
           <span class="accuracy-subtitle result-subtitle">Accuracy</span>
           <span id="quizResultAccuracy" class="result-stat"></span>
@@ -35,7 +31,7 @@
       </div>
       <div class="quiz-game-mode-container">
         <span class="quiz-game-mode-subtitle">Game mode</span>
-        <span id="quizGameMode">Multiple Choice II</span>
+        <span id="quizGameMode">Name the Flag</span>
       </div>
       <div class="results-box-btn-container">
         <button type="button" class="results-box-btn" id="resultsResetBtn">Try Again</button>
@@ -49,21 +45,17 @@
         <span id="quizAccuracy" class="quiz-stat"></span>
         <span id="quizTimer" class="quiz-stat"></span>
       </div>
-      <div class="quiz-flag-name-container">
-        <h4 id="questionFlagName"></h4>
+      <div class="quiz-flag-container">
+        <div class="flag-image-container"></div>
       </div>
-      <div class="quiz-options-container">
-        <div class="options-container">
-          <div class="quiz-option" id="option1" data-name=""></div>
-          <div class="quiz-option" id="option2" data-name=""></div>
-          <div class="quiz-option" id="option3" data-name=""></div>
-          <div class="quiz-option" id="option4" data-name=""></div>
-        </div>
+      <div class="quiz-input-container">
+        <input type="text" id="quizInput" autocomplete="off" autofocus/>
+        <span id="correctAnswer">Kuneho 2022-2023 ♡</span>
       </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript" src="js/quiz.js"></script>
-    <script type="text/javascript" src="js/quiz2.js"></script>
+    <script type="text/javascript" src="js/quiz3.js"></script>
   </body>
 </html>
