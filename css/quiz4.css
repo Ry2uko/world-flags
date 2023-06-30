@@ -1,0 +1,222 @@
+@import 'styles.css';
+
+body, html {
+  background-color: var(--quiz-bg-color);
+  color: #fff;
+}
+
+h1.world-flags-quiz-title {
+  margin: 15px 20px;
+  font-size: 2rem;
+  font-family: var(--ff-Fira-Sans);
+  z-index: 5;
+}
+
+h1.world-flags-quiz-title a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+div.quiz-container {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1rem;
+  opacity: 0;
+}
+
+div.quiz-container div.quiz-stats-container {
+  display: flex;
+  padding-bottom: 2rem;
+}
+
+div.results-box {
+  position: absolute;
+  z-index: 9998;
+  display: none;
+  opacity: 0;
+  border: 1px solid #ffffff0f;
+  background-color: #0f141d;
+  width: 800px;
+  height: 580px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 0.3rem;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem 2rem;
+  font-family: var(--ff-Fira-Sans);
+}
+
+div.results-box h4.modal-title {
+  font-size: 1.3rem;
+  margin-bottom: 5rem;
+  opacity: 0.9;
+}
+
+div.results-box span.modal-text {
+  font-size: 1.5rem;
+}
+
+div.results-box div.results-container {
+  margin: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 85px;
+}
+
+div.results-box div.result-stat-container {
+  margin: 0 2.5rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+div.results-box span.result-subtitle {
+  font-size: 1.5rem;
+}
+
+div.results-box span.result-stat {
+  font-family: var(--ff-Ubuntu);
+  font-weight: bold;
+  margin: 5px 0;
+  font-size: 2.4rem;
+}
+
+div.results-box div.quiz-game-mode-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+div.results-box span.quiz-game-mode-subtitle {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+}
+
+div.results-box span#quizGameMode {
+  margin: 10px 0;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+div.results-box div.results-box-btn-container {
+  margin-top: 4rem;
+  display: flex;
+  justify-content: center;
+}
+
+div.results-box button.results-box-btn {
+  border-radius: 0.8rem;
+  border: none;
+  font-size: 1.55rem;
+  padding: 12px 35px;
+  margin: 0 10px;
+  cursor: pointer;
+  color: #0F141D;
+  font-family: var(--ff-Ubuntu);
+  transition: transform 0.3s;
+}
+
+div.results-box button.results-box-btn:hover {
+  transform: scale(1.04);
+}
+
+button#resultsResetBtn {
+  background-color: #2dd74c;
+  border: 1px solid #2dd74c;
+}
+
+button#resultsOtherModesBtn {
+  background-color: #0F141D;
+  color: #ffffffe1;
+  border: 1px solid #ffffffe1;
+}
+
+div.quiz-stats-container span.quiz-stat {
+  font-size: 1.4rem;
+  font-family: var(--ff-Fira-Sans);
+  width: 120px;
+  text-align: center;
+}
+
+div.quiz-container div.quiz-flag-name-container {
+  margin: 2rem 0;
+}
+
+div.quiz-flag-name-container span.quiz-flag-name-text {
+  font-family: var(--ff-Fira-Sans);
+  font-size: 1.7rem;
+}
+
+span.quiz-flag-name-text span.highlight {
+  color: #00c8ff;
+}
+
+div.quiz-container div.quiz-flags-container {
+  width: 100%;
+  padding: 1rem 4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-gap: 40px 40px;
+}
+
+div.quiz-flags-container div.quiz-flag-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+div.quiz-flag-container div.generic-flag-container {
+  padding: 25px;
+  background-color: #0C1017;
+}
+
+div.quiz-flag-container span.flag-name {
+  color: #fff;
+  opacity: 0;
+  border-radius: 0.2rem;
+  font-family: var(--ff-Fira-Sans);
+  font-size: 1.4rem;
+  pointer-events: none;
+  user-select: none;
+  text-align: center;
+  height: 30px;
+}
+
+div.quiz-flags-container div.quiz-flag-container[data-name="Nepal"] {
+  width: 220px;
+}
+
+div.quiz-flag-container div.gfc-container {
+  cursor: pointer;
+}
+
+div.quiz-flag-container img.quiz-flag {
+  pointer-events: none;
+  width: 100%;
+  user-select: none;
+}
+
+div#quizTooltip {
+  position: absolute;
+  background-color: #fff;
+  color: #000000;
+  font-family: var(--ff-Ubuntu);
+  padding: 2px 15px;
+  border-radius: 0.2rem;
+  font-size: 1.2rem;
+  opacity: 0;
+  z-index: 9999;
+  user-select: none;
+  pointer-events: none;
+}

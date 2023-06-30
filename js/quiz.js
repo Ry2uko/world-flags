@@ -369,7 +369,7 @@ function quizStart(countriesData, questionsData) {
   // Initialization
   USER_STATS.score = 0;
   USER_STATS.time = 0;
-  USER_STATS.counter = 0;
+  USER_STATS.counter = 0; // or attempts
   USER_STATS.accuracy = 0;
 
   COUNTER_TOTAL = questionsData.length;
@@ -407,7 +407,7 @@ correctAudio.volume = 0.3;
 wrongAudio.volume = 0.5;
 successAudio.volume = 0.5;
 failAudio.volume = 0.5;
-incorrectAudio.volume = 0.5;
+incorrectAudio.volume = 0.8;
 correct2Audio.volume = 0.5;
 amazingAudio.volume = 0.8;
 

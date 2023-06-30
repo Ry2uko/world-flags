@@ -1,7 +1,7 @@
 $(document).ready(function(){
   $.get("https://restcountries.com/v3.1/all", countriesData => {
     let parsedCountriesObj = parseData(countriesData);
-    const questionsCount = 193; // Max: 199 Questions
+    const questionsCount = 100; // Max: 199 Questions
     let questions = generateQuestions(multipleChoiceQuestions).slice(0, questionsCount); 
 
     preloadFlags();

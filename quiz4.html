@@ -5,10 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>World Flags: Quiz</title>
+    <link rel="stylesheet" href="css/quiz4.css" type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Fira+Sans&family=Londrina+Solid&family=Ubuntu&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/quiz3.css" type="text/css" />
+    <link rel="stylesheet" href="css/quiz4.css" type="text/css" />
     <script src="https://kit.fontawesome.com/b40850cb13.js" crossorigin="anonymous"></script>
   </head>
   <body>
@@ -18,7 +19,7 @@
 
     <div class="results-box">
       <h4 class="modal-title">- World Flags: Quiz -</h4>
-      <span class="modal-text">Well done! You got:</span>
+      <span class="modal-text"></span>
       <div class="results-container">
         <div class="accuracy-container result-stat-container">
           <span class="accuracy-subtitle result-subtitle">Accuracy</span>
@@ -31,7 +32,7 @@
       </div>
       <div class="quiz-game-mode-container">
         <span class="quiz-game-mode-subtitle">Game mode</span>
-        <span id="quizGameMode">Name the Flag</span>
+        <span id="quizGameMode">Pin the Flag</span>
       </div>
       <div class="results-box-btn-container">
         <button type="button" class="results-box-btn" id="resultsResetBtn">Try Again</button>
@@ -40,22 +41,22 @@
     </div>
 
     <div class="quiz-container" id="quizBox">
+      <div id="quizTooltip"></div>
+
       <div class="quiz-stats-container">
         <span id="quizCounter" class="quiz-stat"></span>
         <span id="quizAccuracy" class="quiz-stat"></span>
         <span id="quizTimer" class="quiz-stat"></span>
       </div>
-      <div class="quiz-flag-container">
-        <div class="flag-image-container"></div>
+
+      <div class="quiz-flag-name-container">
+        <span class="quiz-flag-name-text">Click on <span class="highlight"></span></span>
       </div>
-      <div class="quiz-input-container">
-        <input type="text" id="quizInput" autocomplete="off" autofocus/>
-        <span id="correctAnswer">Kuneho 2022-2023 ♡</span>
-      </div>
+      <div class="quiz-flags-container"></div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript" src="js/quiz.js"></script>
-    <script type="text/javascript" src="js/quiz3.js"></script>
+    <script type="text/javascript" src="js/quiz4.js"></script>
   </body>
 </html>

@@ -1,7 +1,7 @@
 $(document).ready(function(){
   $.get("https://restcountries.com/v3.1/all", countriesData => {
     let parsedCountriesObj = parseData(countriesData);
-    const questionsCount = 193; // Max: 199 Questions
+    const questionsCount = 100; // Max: 199 Questions
     let questions = shuffle(generateQuestions(multipleChoiceQuestions)
       .map(i => i.correctChoice)).slice(0, questionsCount); 
 
@@ -112,6 +112,7 @@ function generateQuestion(countriesData, questionsData) {
       $('#quizCounter').text(`${USER_STATS.score}/${COUNTER_TOTAL}`);
       $('#quizAccuracy').text(`${accuracy}%`).attr('title', `${USER_STATS.score} / ${USER_STATS.counter}`);
 
+      // Quiz has ended
       if (USER_STATS.score === COUNTER_TOTAL) {
         let RESULTS_COLOR = '#fff', MODAL_TEXT = 'Well done! You got:';
 

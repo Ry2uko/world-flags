@@ -29,6 +29,10 @@ h1.world-flags-title {
   font-size: 2rem;
   font-family: var(--ff-Ubuntu);
   z-index: 5;
+}
+
+h1.world-flags-title a {
+  text-decoration: none;
   color: #fff;
 }
 
