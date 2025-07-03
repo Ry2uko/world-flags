@@ -1,7 +1,7 @@
 let userAttempts = 3, randFlag, randIndex, flashBool = false;
 
 $(document).ready(function(){
-  $.get("https://restcountries.com/v3.1/all", countriesData => {
+  $.get("https://restcountries.com/v3.1/all?fields=name,code,cca2,continents", countriesData => {
     let parsedCountriesObj = parseData(countriesData);
     const questionsCount = 50; // Max: 199 Questions
     let questions = shuffle(generateQuestions(multipleChoiceQuestions)

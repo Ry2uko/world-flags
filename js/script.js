@@ -21,7 +21,7 @@ $(document).ready(function(){
   const flagsContainer = $('.flags-container');
 
   // load countries data
-  $.get("https://restcountries.com/v3.1/all", countriesData => {
+  $.get("https://restcountries.com/v3.1/all?fields=name,code,cca2,continents", countriesData => {
     let parsedCountriesData = parseData(countriesData);
     let countriesDataShuffled = shuffle(parsedCountriesData);
     let flagsCount = parsedCountriesData.length;
